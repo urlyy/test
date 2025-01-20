@@ -35,10 +35,6 @@ jobs:
       - name: Print GOPATH
         run: echo $GOPATH
 
-      # 检查缓存是否命中
-      - name: Check cache hit
-        run: echo "Cache hit: ${{ steps.cache-gofumpt.outputs.cache-hit }}"
-
       # 验证 gofumpt 是否安装成功
       - name: Verify gofumpt installation
         run: |
