@@ -19,7 +19,7 @@ jobs:
       - name: Cache gofumpt binary
         uses: actions/cache@v3
         with:
-          path: ~/.local/bin/gofumpt
+          path: $GOPATH/bin/gofumpt
           key: ${{ runner.os }}-gofumpt
           restore-keys: |
             ${{ runner.os }}-gofumpt
@@ -28,6 +28,4 @@ jobs:
       - name: Install gofumpt
         if: steps.cache-gofumpt.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ~/.local/bin
           go install mvdan.cc/gofumpt@latest
-          find / -type f -name "gofumpt" 2>/dev/null
