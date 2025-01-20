@@ -23,7 +23,7 @@ jobs:
       - name: Cache gofumpt binary
         uses: actions/cache@v3
         with:
-          path: $BIN/gofumpt
+          path: ${{ env.BIN }}/gofumpt
           key: ${{ runner.os }}-gofumpt
           restore-keys: |
             ${{ runner.os }}-gofumpt
@@ -32,6 +32,6 @@ jobs:
       - name: Install gofumpt
         if: steps.cache-gofumpt.outputs.cache-hit != 'true'
         run: |
-          mkdir -p $BIN
-          GOBIN=$BIN go install mvdan.cc/gofumpt@latest
+          mkdir -p ${{ env.BIN }}
+          GOBIN=${{ env.BIN }} go install mvdan.cc/gofumpt@latest
           
