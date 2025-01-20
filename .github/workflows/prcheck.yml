@@ -17,7 +17,7 @@ jobs:
 
       - name: Set environment variable
         run: |
-          echo "BIN=$HOME/.local/bin" >> $GITHUB_ENV
+          echo "BIN=/usr/local/bin" >> $GITHUB_ENV
 
       # 读取 gofumpt 二进制文件缓存
       - name: Cache gofumpt binary
