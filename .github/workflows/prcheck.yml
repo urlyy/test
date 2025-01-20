@@ -20,7 +20,7 @@ jobs:
         id: cache-gofumpt  # 添加 id 字段
         uses: actions/cache@v3
         with:
-          path: ${{ $GOPATH }}/bin/gofumpt
+          path: ${{ env.$GOPATH }}/bin/gofumpt
           key: ${{ runner.os }}-gofumpt
           restore-keys: |
             ${{ runner.os }}-gofumpt
