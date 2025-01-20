@@ -15,11 +15,15 @@ jobs:
         with:
           go-version: '1.22'
 
+      - name: Set environment variable
+        run: |
+          echo "BIN=~/.local/bin" >> $GITHUB_ENV
+
       # 读取 gofumpt 二进制文件缓存
       - name: Cache gofumpt binary
         uses: actions/cache@v3
         with:
-          path: ~/.local/bin/gofumpt
+          path: $BIN/gofumpt
           key: ${{ runner.os }}-gofumpt
           restore-keys: |
             ${{ runner.os }}-gofumpt
@@ -28,6 +32,6 @@ jobs:
       - name: Install gofumpt
         if: steps.cache-gofumpt.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ~/.local/bin
-          GOBIN=~/.local/bin go install mvdan.cc/gofumpt@latest
+          mkdir -p $BIN
+          GOBIN=$BIN go install mvdan.cc/gofumpt@latest
           
