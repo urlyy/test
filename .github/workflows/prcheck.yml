@@ -1,11 +1,11 @@
 name: Pull Request Check
 
-on: [push, pull_request]
+on: [pull_request,push]
 
 jobs:
   prcheck:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -17,10 +17,9 @@ jobs:
 
       # 读取 gofumpt 二进制文件缓存
       - name: Cache gofumpt binary
-        id: cache-gofumpt  # 添加 id 字段
         uses: actions/cache@v3
         with:
-          path: $GOPATH/bin/gofumpt
+          path: ~/.local/bin/gofumpt
           key: ${{ runner.os }}-gofumpt
           restore-keys: |
             ${{ runner.os }}-gofumpt
@@ -29,17 +28,6 @@ jobs:
       - name: Install gofumpt
         if: steps.cache-gofumpt.outputs.cache-hit != 'true'
         run: |
-          go install mvdan.cc/gofumpt@latest
-
-      # 打印 GOPATH
-      - name: Print GOPATH
-        run: echo $GOPATH
-
-      # 验证 gofumpt 是否安装成功
-      - name: Verify gofumpt installation
-        run: |
-          if [ -f $GOPATH/bin/gofumpt ]; then
-            echo "gofumpt is installed at $GOPATH/bin/gofumpt"
-          else
-            echo "gofumpt is not installed"
-          fi
+          mkdir -p ~/.local/bin
+          GOBIN=~/.local/bin go install mvdan.cc/gofumpt@latest
+          
